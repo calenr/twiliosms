@@ -9,9 +9,12 @@ from twilio.rest import Client
 
 def parse_args(*args):
     parser = ap.ArgumentParser()
-    parser.add_argument('--sender',type=str)
-    parser.add_argument('--recvr',type=str)
-    parser.add_argument('--body',type=str,default="This message send via python script")
+    parser.add_argument('--sender',type=str,
+                        help="The phone number to send SMS from. Must be an active number in your twilio account. Must be in format +12223334444")
+    parser.add_argument('--recvr',type=str,
+                        help="The phone number to send SMS to. Must be in format +12223334444")
+    parser.add_argument('--body',type=str,default="This message send via python script",
+                        help="The body of the text message")
     args = parser.parse_args(*args)
     return args
 
@@ -24,15 +27,11 @@ def send_message(*args):
     api_secret = os.environ['TWILIO_API_KEY_SECRET']
     client = Client(api_key, api_secret, account_sid)
 
-    '''
     message = client.messages.create(
                                 from_=args.sender,
-                                body='Hi there',
+                                body=args.body,
                                 to=args.recvr
                             )
-    print(message.sid)
-    '''
-
 
 if __name__ == "__main__":
     send_message(sys.argv[1:])
