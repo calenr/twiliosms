@@ -18,7 +18,7 @@ def parse_args(*args):
     args = parser.parse_args(*args)
     return args
 
-def send_message(*args):
+def send_message(sender, recvr, body="This is an sms from python via twilio"):
     try:
         args = parse_args(*args)
         # Find your Account SID and Auth Token at twilio.com/console
@@ -29,13 +29,14 @@ def send_message(*args):
         client = Client(api_key, api_secret, account_sid)
 
         message = client.messages.create(
-                                    from_=args.sender,
-                                    body=args.body,
-                                    to=args.recvr
+                                    from_=sender,
+                                    body=body,
+                                    to=recvr
                                     )
     except Exception as e:
         print("Error: Could not send message via twilio")
         print(e)
 
 if __name__ == "__main__":
-    send_message(sys.argv[1:])
+    args = parse_args(sys.argv[1:])
+    send_message(args.sender, args.recvr, args.body)
