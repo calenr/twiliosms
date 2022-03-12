@@ -14,6 +14,12 @@ export TWILIO_API_KEY_SECRET=your_secret
 ```
 
 ## Usage
+### Command Line
 ```
 send_msg.py -h
 ```
+### Python
+from twilio_sms.send_sms import send_message
+send_message(sender='+12223334444',
+             recvr ='+12223334445',
+             body='Message Body')
